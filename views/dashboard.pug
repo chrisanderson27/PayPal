@@ -1,0 +1,238 @@
+extends layout
+
+block head
+  head
+    title Pixie - Profile
+    link(rel='stylesheet' href='/assets/css/flex-slider.css')
+
+block content
+  // Pre Header
+  //- #pre-header
+  //-   .container
+  //-     .row
+  //-       .col-md-12
+  //-         span Suspendisse laoreet magna vel diam lobortis imperdiet
+  //TEST PAYPAL
+  div#paypal-button-container
+  
+  // Navigation
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+    .container
+      a.navbar-brand(href='/')
+        img(src='/assets/images/header-logo.png' alt='')
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarResponsive.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='/') Home
+          li.nav-item
+            a.nav-link(href='/products') Buy
+          li.nav-item.active
+            a.nav-link(href='/dashboard')
+              | Sell
+              span.sr-only (current)
+  // Page Content
+  // About Page Starts Here
+  .contact-page
+    .container
+      .row
+        .col-md-12
+          .section-heading
+            h1 Profile
+        .col-md-12
+          .right-content
+            .container
+              form#login(action='/user/' + user._id method='put')
+                .row
+                  .col-md-12
+                    label
+                      | Business Name
+                    fieldset
+                      input#businessname.form-control(name='business_name' type='text' placeholder='Gucci' value=user.business_name)
+                  .col-md-12
+                    label
+                      | Business Address
+                    fieldset
+                      input#businessaddress.form-control(name='business_address' type='text' placeholder='123 Shop Way' value=user.business_address)
+                  .col-md-4
+                    label
+                      | City
+                    fieldset
+                      input#city.form-control(name='city' type='text' placeholder='San Jose' value=user.state)
+                  .col-md-4
+                    label
+                      | State
+                    fieldset
+                      input#state.form-control(name='state' type='text' placeholder='CA' value=user.city)
+                  .col-md-4
+                    label
+                      | Zip Code
+                    fieldset
+                      input#zipcode.form-control(name='zip_code' type='text' placeholder='12345' value=user.zip_code)
+                  .col-md-12
+                    label
+                      | Email
+                    fieldset
+                      input#email.form-control(name='email' type='text' placeholder='Email' required='' value=user.email)
+                  .col-md-12
+                    fieldset
+                      button#form-submit.button(type='submit' disabled=true) Update
+
+        .col-md-12
+          .section-heading
+            h1 Listings
+        .col-md-12
+          h5 Your listings
+          if listings.length == 0
+            p You have no listings! Add one below.
+            br
+          else
+            .product-slider
+              #slider-secondary.flexslider
+                ul.slides
+                  each listing in listings
+                    li
+                      .right-content
+                        .container
+                          .row
+                            .col-md-6
+                              a(target='_blank' href='/products/' + listing._id onclick=`setSelectedProductAmount(${listing.amount})`) 
+                                img(src='/assets/images/product-' + listing.product_image_number + '.jpg')
+                            .col-md-6
+                              .right-content
+                                .container
+                                  form#updatelisting(method='post' action='/products/' + listing._id)
+                                    fieldset
+                                      input#productseller.form-control(name='seller' type='text' hidden='' value=user._id)
+                                    fieldset
+                                      input#productimgnumber2.form-control(name='product_image_number' type='text' hidden='' value=listing.product_image_number)
+                                    .row
+                                      .col-md-6
+                                        label
+                                          | Name
+                                        fieldset
+                                          input#productname.form-control(name='name' type='text' placeholder='Pants' value=listing.name)
+                                      .col-md-6
+                                        label
+                                          | Amount
+                                        fieldset
+                                          input#productamount.form-control(name='amount' type='text' placeholder='$42.00' value=listing.amount)
+                                      .col-md-12
+                                        label
+                                          | Description
+                                        fieldset
+                                          textarea#productdescription.form-control(name='description' placeholder='Proin commodo, diam a ultricies sagittis, erat odio rhoncus metus, eu feugiat lorem lacus aliquet arcu. Curabitur in gravida nisi, non placerat nibh. Praesent sit amet diam ultrices, commodo turpis id, dignissim leo. Suspendisse mauris massa, porttitor non fermentum vel, ullamcorper scelerisque velit.' value=listing.description)
+                                      .col-md-12
+                                        label
+                                          | Stock
+                                      .col-md-4
+                                        fieldset
+                                          input#productquantity.quantity-text(name='quantity' type='number' placeholder='1' value=listing.quantity)
+                                      .col-md-4
+                                        fieldset
+                                          button#form-submit.button(type='submit') Update Listing
+                                      //- .col-md-4
+                                      //-   fieldset
+                                      //-     button#form-submit.button(type='submit' value='DELETE') Delete
+
+
+        .col-md-12
+          h5 Add a listing
+          .right-content
+            .container
+              form#addlisting(action='/products' method='post')
+                fieldset
+                  input#productseller.form-control(name='seller' type='text' hidden='' value=user._id)
+                fieldset
+                  input#productimgnumber.form-control(name='product_image_number' type='text' hidden='' value='01')
+                .row
+                  .col-md-6
+                    .product-slider
+                      // carousel.flexslider or slider.flexslider
+                      #slider.flexslider
+                        ul#products.slides
+                          li
+                            img(src='/assets/images/product-01.jpg')
+                          li
+                            img(src='/assets/images/product-02.jpg')
+                          li
+                            img(src='/assets/images/product-03.jpg')
+                          li
+                            img(src='/assets/images/product-04.jpg')
+                          li
+                            img(src='/assets/images/product-05.jpg')
+                          li
+                            img(src='/assets/images/product-06.jpg')
+
+                          // items mirrored twice, total of 12
+                  .col-md-6
+                    .right-content
+                      .container
+                        .row
+                          .col-md-6
+                            label
+                              | Name
+                            fieldset
+                              input#productname.form-control(name='name' type='text' placeholder='Pants')
+                          .col-md-6
+                            label
+                              | Amount
+                            fieldset
+                              input#productamount.form-control(name='amount' type='text' placeholder='$42.00')
+                          .col-md-12
+                            label
+                              | Description
+                            fieldset
+                              textarea#productdescription.form-control(name='description' placeholder='Proin commodo, diam a ultricies sagittis, erat odio rhoncus metus, eu feugiat lorem lacus aliquet arcu. Curabitur in gravida nisi, non placerat nibh. Praesent sit amet diam ultrices, commodo turpis id, dignissim leo. Suspendisse mauris massa, porttitor non fermentum vel, ullamcorper scelerisque velit.' value='Proin commodo, diam a ultricies sagittis, erat odio rhoncus metus, eu feugiat lorem lacus aliquet arcu. Curabitur in gravida nisi, non placerat nibh. Praesent sit amet diam ultrices, commodo turpis id, dignissim leo. Suspendisse mauris massa, porttitor non fermentum vel, ullamcorper scelerisque velit.')
+                          .col-md-12
+                            label
+                              | Stock
+                          .col-md-6
+                            fieldset
+                              input#productquantity.quantity-text(name='quantity' type='number' value='1' placeholder='1')
+                          .col-md-6
+                            fieldset
+                              button#form-submit.button(type='submit') Add Listing
+
+        .col-md-12
+          .section-heading
+            h1 Payment
+        .col-md-12
+          .right-content
+            .container
+              .main-button
+                a(onclick='ConnectWithPayPal()') Connect with PayPal
+
+        .col-md-12
+          .section-heading
+            h1 Log Out
+        .col-md-12
+          .right-content
+            .container
+              .main-button
+                a(href='/logout') Log Out
+
+  // About Page Ends Here
+
+  // Bootstrap core JavaScript
+  script(src='/vendor/jquery/jquery.min.js')
+  script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
+  // Additional Scripts
+  script(src='/assets/js/custom.js')
+  script(src='/assets/js/owl.js')
+  script(src='/assets/js/isotope.js')
+  script(src='/assets/js/flex-slider.js')
+  script(src='/assets/js/dashboard.js')
+  script(src='/assets/js/chris.js')
+  script.
+    var user_id = '#{user._id}';
+  script(language='text/Javascript').
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t){                   //declaring the array outside of the
+    if(! cleared[t.id]){                      // function makes it static and global
+    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+    t.value='';         // with more chance of typos
+    t.style.color='#fff';
+    }
+    }

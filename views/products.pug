@@ -1,0 +1,86 @@
+extends layout
+
+block head
+  head
+    title Pixie - Products
+
+block content
+  // Pre Header
+  //- #pre-header
+  //-   .container
+  //-     .row
+  //-       .col-md-12
+  //-         span Suspendisse laoreet magna vel diam lobortis imperdiet
+  // Navigation
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+    .container
+      a.navbar-brand(href='/')
+        img(src='/assets/images/header-logo.png' alt='')
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarResponsive.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='/') Home
+          li.nav-item.active
+            a.nav-link(href='/products')
+              | Buy
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/signup') Sell
+  // Page Content
+  // Items Starts Here
+  .featured-page
+    .container
+      .row
+        .col-md-4.col-sm-12
+          .section-heading
+            .line-dec
+            h1 Items
+        //- .col-md-8.col-sm-12
+        //-   #filters.button-group
+        //-     button.btn.btn-primary(data-filter='*') All Products
+        //-     button.btn.btn-primary(data-filter='.new') Newest
+        //-     button.btn.btn-primary(data-filter='.low') Low Price
+        //-     button.btn.btn-primary(data-filter='.high') Hight Price
+  .featured.container.no-gutter
+    .row
+      each listing in listings
+        .col-md-4
+          a(href='/products/' + listing._id)
+            .featured-item
+              img(src='/assets/images/product-' + listing.product_image_number + '.jpg')
+              h4 #{listing.name}
+              h6 #{listing.amount}
+  //- .page-navigation
+  //-   .container
+  //-     .row
+  //-       .col-md-12
+  //-         ul
+  //-           li.current-page
+  //-             a(href='#') 1
+  //-           li
+  //-             a(href='#') 2
+  //-           li
+  //-             a(href='#') 3
+  //-           li
+  //-             a(href='#')
+  //-               i.fa.fa-angle-right
+
+  // Bootstrap core JavaScript
+  script(src='/vendor/jquery/jquery.min.js')
+  script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
+  // Additional Scripts
+  script(src='"https://www.paypal.com/sdk/js?client-id=AW709mxXOrmjSs5UWW4PQgGkA4gYIJKmOiBdPlM24CwTecfWpOtesxV_mnJo3uppHHwGHu3ZKVNWTONJ&merchant-id=EK36YGTTGLRTA&currency=USD&intent=capture data-partner-attribution-id="Pixie_888"')
+  script(src='/assets/js/custom.js')
+  script(src='/assets/js/owl.js')
+  script(src='/assets/js/isotope.js')
+  script(language='text/Javascript').
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t){                   //declaring the array outside of the
+    if(! cleared[t.id]){                      // function makes it static and global
+    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+    t.value='';         // with more chance of typos
+    t.style.color='#fff';
+    }
+    }

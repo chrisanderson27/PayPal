@@ -1,0 +1,96 @@
+extends layout
+
+block head
+  head
+    title Pixie
+
+block content
+  //- #pre-header
+  //-   .container
+  //-     .row
+  //-       .col-md-12
+  //-         span Suspendisse laoreet magna vel diam lobortis imperdiet
+  // Navigation
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+    .container
+      a.navbar-brand(href='/')
+        img(src='/assets/images/header-logo.png' alt='')
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarResponsive.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item.active
+            a.nav-link(href='/')
+              | Home
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/products') Buy
+          li.nav-item
+            a.nav-link(href='/signup') Sell
+  // Page Content
+  // Banner Starts Here
+  .banner
+    .container
+      .row
+        .col-md-12
+          .caption
+            h2 Welcome to Pixie!
+            .line-dec
+            p
+              | Pixie is a marketplace for finding designer clothes and
+              | accessories at a reasonable price.
+              br
+              br
+              | Check out our catalog of products to start shopping. If
+              | you're interested in selling on Pixie, you can sign up
+              a(href='/signup') &nbsp;here
+              | .
+              //- | Please tell your friends about
+              //- a(rel='nofollow' href='https://www.facebook.com/tooplate/') Tooplate
+              //- |  free template site. Thank you. Photo credit goes to
+              //- a(rel='nofollow' href='https://www.pexels.com') Pexels website
+              //- | .
+            .main-button
+              a(href='/products') Shop!
+  // Banner Ends Here
+  // Featured Starts Here
+  .featured-items
+    .container
+      .row
+        .col-md-12
+          .section-heading
+            .line-dec
+            h1 Most Recently Added Items
+        .col-md-12
+          if listings.length == 0
+            p
+              | There are no listings!
+              a(href='/signup') &nbsp;Sign up
+              |  to sell on Pixie to start listing items.
+          else
+            .owl-carousel.owl-theme
+              each listing in listings
+                a(href='/products/' + listing._id)
+                  .featured-item
+                    img(src='/assets/images/product-' + listing.product_image_number + '.jpg')
+                    h4 #{listing.name}
+                    h6 #{listing.amount}
+  // Bootstrap core JavaScript
+  script(src='/vendor/jquery/jquery.min.js')
+  script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
+  // Additional Scripts
+  //- script(src='https://www.paypal.com/sdk/js?client-id=AW709mxXOrmjSs5UWW4PQgGkA4gYIJKmOiBdPlM24CwTecfWpOtesxV_mnJo3uppHHwGHu3ZKVNWTONJ&merchant-id=EK36YGTTGLRTA&currency=USD&intent=capture data-partner-attribution-id="Pixie_888"')
+  script(src='/assets/js/custom.js')
+  script(src='/assets/js/owl.js')
+  script(src='/assets/js/isotope.js')
+  script(src='/assets/js/productPageLoad.js')
+  script(language='text/Javascript').
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t){                   //declaring the array outside of the
+    if(! cleared[t.id]){                      // function makes it static and global
+    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+    t.value='';         // with more chance of typos
+    t.style.color='#fff';
+    }
+    }
+

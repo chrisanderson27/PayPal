@@ -1,0 +1,122 @@
+extends layout
+
+block head
+  head
+    title Pixie - Sell
+
+block content
+  // Pre Header
+  //- #pre-header
+  //-   .container
+  //-     .row
+  //-       .col-md-12
+  //-         span Suspendisse laoreet magna vel diam lobortis imperdiet
+  // Navigation
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
+    .container
+      a.navbar-brand(href='/')
+        img(src='/assets/images/header-logo.png' alt='')
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarResponsive.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='/') Home
+          li.nav-item
+            a.nav-link(href='/products') Buy
+          li.nav-item.active
+            a.nav-link(href='/signup')
+              | Sell
+              span.sr-only (current)
+  // Page Content
+  // About Page Starts Here
+  .contact-page
+    .container
+      .row
+        .col-md-6
+          .section-heading
+            h1 Log In
+        .col-md-6
+          .section-heading
+            h1 Sign Up
+        .col-md-6
+          .right-content
+            .container
+              form#login(action='/login' method='post')
+                .row
+                  .col-md-12
+                    label
+                      | Email
+                    fieldset
+                      input#email.form-control(name='email' type='text' placeholder='you@example.com' required='')
+                  .col-md-12
+                    label
+                      | Password
+                    fieldset
+                      input#password.form-control(name='password' type='password' placeholder='*******' required='')
+                  .col-md-12
+                    fieldset
+                      button#form-submit.button(type='submit') Login
+
+        .col-md-6
+          .right-content
+            .container
+              form#signup(action='' method='post')
+                .row
+                  .col-md-12
+                    label
+                      | Business Name
+                    fieldset
+                      input#businessname.form-control(name='business_name' type='text' placeholder='Gucci')
+                  .col-md-12
+                    label
+                      | Business Address
+                    fieldset
+                      input#businessaddress.form-control(name='business_address' type='text' placeholder='123 Shop Way')
+                  .col-md-4
+                    label
+                      | City
+                    fieldset
+                      input#city.form-control(name='city' type='text' placeholder='San Jose')
+                  .col-md-4
+                    label
+                      | State
+                    fieldset
+                      input#state.form-control(name='state' type='text' placeholder='CA')
+                  .col-md-4
+                    label
+                      | Zip Code
+                    fieldset
+                      input#zipcode.form-control(name='zip_code' type='text' placeholder='12345')
+                  .col-md-12
+                    label
+                      | Email
+                    fieldset
+                      input#email.form-control(name='email' type='text' placeholder='you@example.com' required='')
+                  .col-md-12
+                    label
+                      | Password
+                    fieldset
+                      input#password.form-control(name='password' type='password' placeholder='*******' required='')
+                  .col-md-12
+                    fieldset
+                      button#form-submit.button(type='submit') Sign Up
+
+  // About Page Ends Here
+
+  // Bootstrap core JavaScript
+  script(src='/vendor/jquery/jquery.min.js')
+  script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
+  // Additional Scripts
+  script(src='/assets/js/custom.js')
+  script(src='/assets/js/owl.js')
+  script(src='/assets/js/isotope.js')
+  script(language='text/Javascript').
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t){                   //declaring the array outside of the
+    if(! cleared[t.id]){                      // function makes it static and global
+    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+    t.value='';         // with more chance of typos
+    t.style.color='#fff';
+    }
+    }

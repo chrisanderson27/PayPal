@@ -1,0 +1,1 @@
+setSelectedProductAmount(document.getElementById('amount').innerHTML);
